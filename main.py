@@ -33,9 +33,9 @@ def create_default_admin(db: Session):
             email=os.getenv("ADMIN_EMAIL"),
             hashed_password=hashed_password,
             role="admin",  # Establece el rol como admin
-            salary=0,  # Puedes ajustar esto según lo necesites
+            salary=0,  
             hire_date=date.today(),
-            birth_date=date(1990, 1, 1)  # Ajusta la fecha de nacimiento según lo necesites
+            birth_date=date(1990, 1, 1)  
         )
         db.add(admin_user)
         db.commit()

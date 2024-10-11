@@ -65,7 +65,7 @@ class ProjectOut(BaseModel):
     end_date: date
     assigned_user_id: int  
     department_id: int  
-
+#Modelo para crear el proyecto
 class ProjectCreate(BaseModel):
     name: str
     start_date: date

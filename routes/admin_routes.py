@@ -99,13 +99,6 @@ def delete_user(user_id: int, db: Session = Depends(database.get_db), current_us
     db.commit()
     return {"message": "Usuario eliminado exitosamente"}
 
-@router.get("/users/{user_id}", response_model=schemas.UserOut)
-def get_user(user_id: int, db: Session = Depends(database.get_db)):
-    user = db.query(models.User).filter(models.User.id == user_id).first()
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    return user
-
 @router.post("/createProject/", response_model=schemas.ProjectOut)
 def create_project(project: schemas.ProjectCreate, db: Session = Depends(database.get_db), current_user: schemas.UserOut = Depends(oauth2.get_current_user)):
     verify_admin(current_user)  # Verifica si el usuario actual es admin
@@ -124,7 +117,7 @@ def create_project(project: schemas.ProjectCreate, db: Session = Depends(databas
         start_date=project.start_date,
         end_date=project.end_date,
         department_id=project.department_id,
-        assigned_user_id=project.assigned_user_id  # Asegúrate de usar 'assigned_user_id'
+        assigned_user_id=project.assigned_user_id  
     )
 
     db.add(db_project)

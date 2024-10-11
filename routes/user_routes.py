@@ -18,4 +18,8 @@ def login(user: schemas.UserLogin, db: Session = Depends(database.get_db)):
         raise HTTPException(status_code=400, detail="Credenciales inválidas")
 
     token = oauth2.create_access_token(data={"sub": db_user.email})
-    return {"access_token": token, "token_type": "bearer"}
+    return {
+        "message": "Bievenido",
+        "user": db_user.name ,
+        "access_token": token,
+          "token_type": "bearer"}

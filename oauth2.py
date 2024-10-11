@@ -4,11 +4,14 @@ from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 import schemas, models, database
 from fastapi.security import OAuth2PasswordBearer
+import os
+from dotenv import load_dotenv
 
 # Definir el esquema de autenticación
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+load_dotenv()
 
-SECRET_KEY = "your_secret_key"  # Cambia esto a un valor seguro en producción
+SECRET_KEY = os.getenv('SECRET_KEY')
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -29,7 +32,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
         db = database.SessionLocal()
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user = db.query(models.User).filter(models.User.id == payload.get("sub")).first()  # Asegúrate de usar el modelo y campo correctos
+        user = db.query(models.User).filter(models.User.email == payload.get("sub")).first()  # Asegúrate de usar el modelo y campo correctos
         if user is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuario no encontrado")
         return user

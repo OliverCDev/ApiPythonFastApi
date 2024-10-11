@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel, EmailStr, constr, validator
 from datetime import date
 import re
@@ -6,6 +7,7 @@ import re
 class UserBase(BaseModel):
     email: EmailStr
     name: str
+    role: Optional[str] = None
     salary: float
     hire_date: date
     birth_date: date
@@ -19,6 +21,12 @@ class UserCreate(UserBase):
         if not re.match(r'^(?=.*[A-Z])(?=.*\d).+$', v):
             raise ValueError('La contraseña debe contener al menos una letra mayúscula y un número.')
         return v
+# Modelo para la actualizacion de un usuario   
+class UserUpdate(BaseModel):
+    name: str
+    salary: float
+    hire_date: date
+    birth_date: date
 
 # Modelo para la actualización de un usuario
 class UserUpdate(BaseModel):
@@ -32,12 +40,12 @@ class UserResponse(UserBase):
     id: int
     role: str
 
+#Modelo para la respuesta de un usuario
 class UserOut(BaseModel):
     id: int
     email: str
-    is_active: bool
     class Config:
-        orm_mode = True
+        from_attributes = True
         
         
 # Modelo para el login
@@ -49,3 +57,18 @@ class UserLogin(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+#Modelo para la respuesta del proyecto
+class ProjectOut(BaseModel):
+    id: int
+    name: str
+    start_date: date
+    end_date: date
+    assigned_user_id: int  
+    department_id: int  
+
+class ProjectCreate(BaseModel):
+    name: str
+    start_date: date
+    end_date: date
+    department_id: int
+    assigned_user_id: int 

@@ -30,7 +30,7 @@ def create_default_admin(db: Session):
         hashed_password = get_password_hash(os.getenv("ADMIN_PASSWORD"))  # Asegúrate de usar una contraseña segura
         admin_user = models.User(
             name="Admin User",
-            email="admin@example.com",
+            email=os.getenv("ADMIN_EMAIL"),
             hashed_password=hashed_password,
             role="admin",  # Establece el rol como admin
             salary=0,  # Puedes ajustar esto según lo necesites

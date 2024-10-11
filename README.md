@@ -47,6 +47,22 @@ Asegúrate de tener instalados los siguientes programas:
     DATABASE_URL = URL
     ```
     para colocar la url.
+6. **Configura tu archivo .env**
+    
+    Crea un archivo .env en la raiz del proyecto donde configuraras la cadena de conexion de tu base de datos. Usa la propiedad 
+    ```
+    DATABASE_URL = URL
+    ```
+    para colocar la url.
+    Adicional agrega tu correo y contraseña de administrador
+     ```
+    ADMIN_PASSWORD="contraseña"
+    ADMIN_EMAIL="admin@example.com"
+    ``` 
+    Y muy importante tu SECRET_KEY para la encriptacion de contraseñas
+     ```
+    SECRET_KEY = "KEY";
+    ``` 
 
 7. **Ejecuta la aplicacion**
    
